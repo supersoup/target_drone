@@ -1,0 +1,24 @@
+{
+  "name": "target_drone",
+  "version": "1.0.0",
+  "description": "渗透测试用的靶机",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supersoup/target_drone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supersoup/target_drone/issues"
+  },
+  "homepage": "https://github.com/supersoup/target_drone#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "url-parse": "^1.4.7"
+  }
+}
