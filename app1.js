@@ -11,6 +11,10 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(STATIC_PATH));
 
+app.use(/\/$/, function(req, res) {
+	res.render('index.ejs')
+});
+
 app.use('/views1/xssFromBackendTag', function(req, res) {
 	const content = req.query.content;
 	
