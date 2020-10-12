@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>储存型</title>
+    <style>
+        form {
+            border: 1px solid grey;
+            width: 260px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        th, td {
+            border: 1px solid grey;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<form action="/toLogin" method="post">
+    <p>
+        <h1>登录</h1>
+    </p>
+    <p>
+        <label><span>账号：</span><input type="text" name="username"></label>
+    </p>
+    <p>
+        <label><span>密码：</span><input type="password" name="password"></label>
+    </p>
+    <p>
+        <input type="submit" value="提交">
+    </p>
+</form>
+
+<table>
+    <tr>
+        <th colspan="2">可用账号密码</th>
+    </tr>
+    <tr>
+        <th>账号</th>
+        <th>密码</th>
+    </tr>
+    <% for (let i = 0; i < userList.length; i ++) { %>
+    <tr>
+        <td><%= userList[i].username %></td>
+        <td><%= userList[i].password %></td>
+    </tr>
+    <% } %>
+</table>
+
+<script>
+
+</script>
+
+</body>
+</html>
