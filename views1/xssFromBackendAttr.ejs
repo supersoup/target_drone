@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>反射型 xss 属性</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<h1>从后台模板引擎中反射: </h1>
+<p>1. 本页面，开启了 X-XSS-Protection，是非常不安全的！我们可以在下方看到：</p>
+<p><img src="../static/images/xssFromBackend-xss-responseheader.jpg" alt="xss响应头"></p>
+<p>2. 可以依次尝试将下面灰色的内容复制到浏览器地址后面：</p>
+<ul>
+    <li>标签注入：<code>?content=&lt;script&gt;alert('标签注入')&lt;/script&gt;</code> 不会出现弹框</li>
+    <li>标签注入：<code>?content=&lt;img src="null" onerror="alert('标签注入')"&gt;</code></li>
+    <li>属性注入：<code>?content=null" onerror="alert('属性注入')"</code></li>
+    <li>脚本注入，而且无法被 X-XSS-Protection 响应头防御：<code>?content=1);alert('脚本注入'</code> 不会出现弹框</li>
+</ul>
+<p>3. 这个是要渲染的实际内容：</p>
+<div>
+    <div>
+        <p>反射属性：</p>
+        <img src="<%- content %>" alt="">
+    </div>
+</div>
+
+</body>
+</html>
