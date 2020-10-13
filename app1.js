@@ -2,9 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
-const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const _ = require('underscore');
 
 const STATIC_PATH = path.resolve(__dirname, '');

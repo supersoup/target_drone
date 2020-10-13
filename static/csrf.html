@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>csrf 攻击</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<h1>csrf 攻击<a href="/">返回目录</a></h1>
+<p>尝试在 qq 上，或者邮件中，向某一位用户发送以下链接：</p>
+
+<p>1. 对方如果点击该链接后，就会被扣1块钱!</p>
+<p><code>http://localhost:9000/deductMoney</code></p>
+
+<p>2. 如果发送以下链接，还可以引入 xss，这个叫“csrf 连带引入的 xss”，造成连环的破坏！</p>
+<p><code>http://localhost:9000/createMessage?content=%3Cimg%20src=%22null%22%20onerror=%22alert(%27%20xss%E6%94%BB%E5%87%BB%EF%BC%81%27)%22%3E</code></p>
+
+<p>3. 攻击者可以把这个链接做得隐蔽一点，比如用“新浪短网址”来掩饰：</p>
+<p><a href="https://sina.lt/index.html">https://sina.lt/index.html</a></p>
+
+</body>
+</html>

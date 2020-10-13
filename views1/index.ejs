@@ -21,19 +21,27 @@
 </head>
 <body>
 <ul class="menu-list">
-    <li class="menu-item-title">一、反射型 xss：</li>
+
+    <li class="menu-item-title">一、一个看上去是正常的项目：</li>
+    <li class="menu-item">
+        <ul class="menu-list">
+            <li class="menu-item"><a href="/login">登录</a></li>
+            <li class="menu-item"><a href="/home">个人中心</a></li>
+        </ul>
+    </li>
+    <li class="menu-item-title">二、对这个正常项目的攻击：</li>
+    <li class="menu-item">
+        <ul class="menu-list">
+            <li class="menu-item"><a href="/static/csrf.html">csrf 攻击</a></li>
+            <li class="menu-item"><a href="/static/xssFromFrontend.html">xss 攻击</a></li>
+        </ul>
+    </li>
+    <li class="menu-item-title">三、反射型 xss：</li>
     <li class="menu-item">
         <ul class="menu-list">
             <li class="menu-item"><a href="/views1/xssFromBackendTag">标签注入</a></li>
             <li class="menu-item"><a href="/views1/xssFromBackendAttr">属性注入</a></li>
             <li class="menu-item"><a href="/views1/xssFromBackendScript">脚本注入</a></li>
-        </ul>
-    </li>
-    <li class="menu-item-title">二、一个看上去是正常的项目：</li>
-    <li class="menu-item">
-        <ul class="menu-list">
-            <li class="menu-item"><a href="/login">登录</a></li>
-            <li class="menu-item"><a href="/home">个人中心</a></li>
         </ul>
     </li>
 </ul>

