@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人主页</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid grey;
+            padding: 10px 20px;
+        }
+
+        #content {
+            border: 1px solid grey;
+            width: 400px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<h1>个人主页<a href="/">返回目录</a></h1>
+<table>
+    <tr>
+        <th>账号：</th>
+        <td><%= user.username %></td>
+    </tr>
+    <tr>
+        <th>现金：</th>
+        <td id="money"><%= user.money %></td>
+    </tr>
+    <tr>
+        <th>扣款操作</th>
+        <td><input type="button" value="扣款" id="deductMoneyButton"></td>
+    </tr>
+    <tr>
+        <th rowspan="2">评论操作</th>
+        <td>
+            <textarea id="content" cols="30" rows="10"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" id="createMessageButton" value="提交评论">
+        </td>
+    </tr>
+</table>
+
+<h2>评论</h2>
+<ul>
+    <% for (let i = 0; i < messageList.length; i ++) { %>
+    <li>
+        <p>用户：<%= messageList[i].username %></p>
+        <div><%- messageList[i].content %></div>
+    </li>
+    <% } %>
+</ul>
+
+<script src="../static/lib/jquery.js"></script>
+<script>
+    $(function () {
+        $('#createMessageButton').click(function () {
+            const $content = $('#content');
+            const val = $content.val();
+
+            $.get('/createMessage?content=' + val).then(function (res) {
+                if (res.flag === 1) {
+	                location.reload();
+                }
+            }).catch(function () {
+                alert('您没有登录');
+            })
+        })
+
+        $('#deductMoneyButton').click(function () {
+	        $.get('/deductMoney').then(function (res) {
+		        if (res.flag === 1) {
+			        $('#money').text(res.money);
+		        }
+	        }).catch(function () {
+		        alert('您没有登录');
+	        })
+        })
+    })
+</script>
+
+</body>
+</html>

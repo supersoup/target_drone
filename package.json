@@ -18,9 +18,13 @@
   "homepage": "https://github.com/supersoup/target_drone#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jquery": "^3.5.1",
+    "underscore": "^1.11.0",
     "url-parse": "^1.4.7"
   }
 }
