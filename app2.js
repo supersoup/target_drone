@@ -6,7 +6,8 @@ const ejs = require('ejs');
 const STATIC_PATH = path.resolve(__dirname, '');
 const app = express();
 const cache = {
-	localhost9001Cookies: []
+	localhost9001Cookies: [],
+	localhost9001user: [],
 };
 
 app.set('views', path.join(__dirname, 'views2'))
@@ -23,16 +24,23 @@ app.use('/add', function (req, res) {
 	res.sendFile(path.resolve(__dirname, 'static/images/null.jpg'));
 });
 
-app.use('/add', function (req, res) {
-	const cookie = req.query.a;
-	cache.localhost9001Cookies.push(cookie);
-	res.sendFile('static/images/null.jpg');
+app.use('/login', bodyParser.urlencoded(), function (req, res) {
+	const body = req.body;
+	
+	cache.localhost9001user.push({
+		username: body.username,
+		password: body.password
+	});
+	
+	res.send('<p>账号密码错误，请<a href="http://localhost:9000/login">重新输入</a>!</p>')
 });
 
 app.use(/\/$/, function(req, res) {
-	res.render('index.ejs', {
-		localhost9001Cookies: cache.localhost9001Cookies
-	});
+	res.render('index.ejs', cache);
+});
+
+app.use('/clickjacking', function(req, res) {
+	res.render('clickjacking.ejs');
 });
 
 
