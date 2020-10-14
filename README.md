@@ -20,7 +20,7 @@ https://nodejs.org/zh-cn/download/
 
 在 db.js 中配置数据库相关信息。
 
-开启两个命令行：
+三、开启两个服务，您可以使用两个命令行：
 
 靶机：
 
