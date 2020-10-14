@@ -71,6 +71,28 @@
             <p id="studentsInfo"></p>
         </td>
     </tr>
+
+    <!--保存内容到文件-->
+    <tr>
+        <th rowspan="3">保存内容到文件</th>
+        <td>
+            <textarea id="fileContent"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" id="saveToFile" value="保存">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                <% for (let i = 0; i < user.files.length; i ++) { %>
+                <li><a href="/<%= user.files[i] %>" target="_blank"><%= user.files[i] %></a></li>
+                <% } %>
+            </ul>
+        </td>
+    </tr>
 </table>
 
 <h2>评论列表</h2>
@@ -123,6 +145,22 @@
             }).catch(function(res) {
 		        $('#studentsInfo').text(JSON.stringify(res))
             })
+        })
+
+        $('#saveToFile').click(function() {
+        	$.ajax({
+		        url: '/saveToFile',
+		        data: {
+			        content: $('#fileContent').val()
+		        },
+		        dataType: 'json'
+            }).then(function(res) {
+		        if (res.flag === 1) {
+			        location.reload();
+		        }
+            }).catch(function(res) {
+		        alert('您没有登录')
+	        })
         })
     })
 </script>

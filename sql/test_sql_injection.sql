@@ -28,6 +28,9 @@ CREATE TABLE `classes` (
 -- ----------------------------
 -- Records of classes
 -- ----------------------------
+
+
+
 INSERT INTO `classes` VALUES ('1', '19级1班');
 INSERT INTO `classes` VALUES ('2', '19级2班');
 INSERT INTO `classes` VALUES ('3', '20级1班');

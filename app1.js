@@ -5,21 +5,22 @@ const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 const _ = require('underscore');
 const pool = require('./db').pool;
-
+const exec = require('child_process').exec;
 
 const STATIC_PATH = path.resolve(__dirname, '');
 const app = express();
 const cache = {
 	userList: [
-		{username: 'aaa', password: '111', money: 100},
-		{username: 'bbb', password: '222', money: 100},
-		{username: 'ccc', password: '333', money: 100},
+		{username: 'aaa', password: '111', money: 100, files: []},
+		{username: 'bbb', password: '222', money: 100, files: []},
+		{username: 'ccc', password: '333', money: 100, files: []},
 	],
 	session: {},
-	messageList: []
+	messageList: [],
+	fileName: 1
 };
 
-app.set('views', path.join(__dirname, 'views1'))
+app.set('views', path.join(__dirname, 'views1'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(STATIC_PATH));
@@ -154,7 +155,7 @@ app.use('/queryStudents', function(req, res) {
 		
 		pool.query(sql, function(error, result, fields) {
 			if (error) {
-				res.status(404).send(JSON.stringify(error));
+				res.status(400).send(JSON.stringify(error));
 			} else {
 				res.json({
 					flag: 1,
@@ -162,6 +163,30 @@ app.use('/queryStudents', function(req, res) {
 				});
 			}
 		});
+	}
+});
+
+app.use('/saveToFile', function(req, res) {
+	const username = valid(req);
+	
+	if (!username) {
+		res.status(403).json({flag: 2, message: '您没有登录！'})
+	} else {
+		const content = req.query.content;
+		const fileName = 'files/' + cache.fileName + '.txt';
+		
+		cache.fileName ++;
+		const cmd = 'echo ' + content + ' > ' + fileName;
+		getUser(username).files.push(fileName);
+		exec(cmd, function (error) {
+			if (error) {
+				res.status(400).send(JSON.stringify(error));
+			} else {
+				res.json({
+					flag: 1,
+				});
+			}
+		})
 	}
 });
 
