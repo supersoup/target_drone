@@ -16,10 +16,10 @@
             padding: 10px 20px;
         }
 
-        #content {
+        textarea {
             border: 1px solid grey;
             width: 400px;
-            height: 200px;
+            height: 60px;
         }
     </style>
 </head>
@@ -30,18 +30,21 @@
         <th>账号：</th>
         <td><%= user.username %></td>
     </tr>
+
+    <!--现金扣款-->
     <tr>
-        <th>现金：</th>
-        <td id="money"><%= user.money %></td>
+        <th rowspan="2">现金扣款</th>
+        <td>现金：<span id="money"><%= user.money %></span></td>
     </tr>
     <tr>
-        <th>扣款操作</th>
-        <td><input type="button" value="扣款" id="deductMoneyButton"></td>
+        <td><input type="button" value="扣款1元" id="deductMoneyButton"></td>
     </tr>
+
+    <!--评论-->
     <tr>
         <th rowspan="2">评论操作</th>
         <td>
-            <textarea id="content" cols="30" rows="10"></textarea>
+            <textarea id="content"></textarea>
         </td>
     </tr>
     <tr>
@@ -49,9 +52,28 @@
             <input type="button" id="createMessageButton" value="提交评论">
         </td>
     </tr>
+
+    <!--查询数据库-->
+    <tr>
+        <th rowspan="3">模糊查询学生</th>
+        <td>
+            <textarea id="studentNameQuery"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" id="queryStudents" value="查询">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>结果：</p>
+            <p id="studentsInfo"></p>
+        </td>
+    </tr>
 </table>
 
-<h2>评论</h2>
+<h2>评论列表</h2>
 <ul>
     <% for (let i = 0; i < messageList.length; i ++) { %>
     <li>
@@ -85,6 +107,22 @@
 	        }).catch(function () {
 		        alert('您没有登录');
 	        })
+        })
+
+        $('#queryStudents').click(function() {
+        	$.ajax({
+                url: '/queryStudents',
+                data: {
+                	name: $('#studentNameQuery').val()
+                },
+                dataType: 'json'
+            }).then(function(res) {
+		        if (res.flag === 1) {
+			        $('#studentsInfo').text(JSON.stringify(res.content));
+		        }
+            }).catch(function(res) {
+		        $('#studentsInfo').text(JSON.stringify(res))
+            })
         })
     })
 </script>

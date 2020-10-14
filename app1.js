@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
 const _ = require('underscore');
+const pool = require('./db').pool;
+
 
 const STATIC_PATH = path.resolve(__dirname, '');
 const app = express();
@@ -138,6 +140,28 @@ app.use('/deductMoney', function (req, res) {
 			flag: 1,
 			money: user.money
 		})
+	}
+});
+
+app.use('/queryStudents', function(req, res) {
+	const username = valid(req);
+	
+	if (!username) {
+		res.status(403).json({flag: 2, message: '您没有登录！'})
+	} else {
+		const name = req.query.name;
+		const sql = "SELECT * from students WHERE name = '" + name + "'";
+		
+		pool.query(sql, function(error, result, fields) {
+			if (error) {
+				res.status(404).send(JSON.stringify(error));
+			} else {
+				res.json({
+					flag: 1,
+					content: result
+				});
+			}
+		});
 	}
 });
 
