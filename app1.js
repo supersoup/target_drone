@@ -1,4 +1,6 @@
 const path = require('path');
+const fs = require('fs');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
@@ -24,8 +26,11 @@ app.set('views', path.join(__dirname, 'views1'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(STATIC_PATH));
-
 app.use(cookieParser());
+
+const dirPath = path.resolve(__dirname, 'files');
+deleteFolderRecursive(dirPath);
+fs.mkdir(dirPath, function() {});
 
 app.use('/', function (req, res, next) {
 	const mysession = req.cookies.mysession;
@@ -117,7 +122,7 @@ app.use('/createMessage', function(req, res) {
 	if (!username) {
 		res.status(403).json({flag: 2, message: '您没有登录！'})
 	} else {
-		const content = req.query.content;
+		const content = req.query.content ;
 		const message = {username: username, content: content};
 		
 		messageList.push(message);
@@ -216,6 +221,39 @@ function getUser(username) {
 	
 	return user;
 }
+
+function deleteFolderRecursive(url) {
+	let files = [];
+	/**
+	 * 判断给定的路径是否存在
+	 */
+	if (fs.existsSync(url)) {
+		/**
+		 * 返回文件和子目录的数组
+		 */
+		files = fs.readdirSync(url);
+		files.forEach(function (file, index) {
+			
+			const curPath = path.join(url, file);
+			console.log(curPath);
+			/**
+			 * fs.statSync同步读取文件夹文件，如果是文件夹，在重复触发函数
+			 */
+			if (fs.statSync(curPath).isDirectory()) { // recurse
+				deleteFolderRecursive(curPath);
+				
+			} else {
+				fs.unlinkSync(curPath);
+			}
+		});
+		/**
+		 * 清除文件夹
+		 */
+		fs.rmdirSync(url);
+		
+	}
+}
+
 
 app.listen(9000, function () {
 	console.log('第一个服务器：localhost:9000');

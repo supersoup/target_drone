@@ -100,7 +100,7 @@
     <% for (let i = 0; i < messageList.length; i ++) { %>
     <li>
         <p>用户：<%= messageList[i].username %></p>
-        <div><%- messageList[i].content %></div>
+        <div><%- messageList[i].content  %></div>
     </li>
     <% } %>
 </ul>
@@ -112,7 +112,7 @@
             const $content = $('#content');
             const val = $content.val();
 
-            $.get('/createMessage?content=' + val).then(function (res) {
+            $.get('/createMessage?content=' + encodeURIComponent(val) ).then(function (res) {
                 if (res.flag === 1) {
 	                location.reload();
                 }
